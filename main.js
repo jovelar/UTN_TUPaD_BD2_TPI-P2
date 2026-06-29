@@ -9,7 +9,7 @@ const cliente = new MongoClient("mongodb://BD2TPI:admin1234@ac-qqctg7w-shard-00-
 
 //para la lectura por teclado
 const rl = createInterface({ input: process.stdin, output: process.stdout });
-const db = cliente.db("taller");
+const db = cliente.db("taller_mecanico");
 
 // ===================== USUARIOS =====================
 async function menuUsuarios() {
