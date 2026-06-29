@@ -1,11 +1,10 @@
+require('dotenv').config();
 const { MongoClient, ObjectId } = require("mongodb");
 const { createInterface } = require("node:readline/promises");
 
-//Cliente por defecto, pero si falla hay que usar el formato viejo
-//const cliente= new MongoClient("mongodb+srv://BD2TPI:admin1234@clusterm0.ggv0hxk.mongodb.net/?appName=ClusterM0");
-
-//Formato viejo, utilizar si en el anterior se rechaza la coneccion
-const cliente = new MongoClient("mongodb://BD2TPI:admin1234@ac-qqctg7w-shard-00-00.ggv0hxk.mongodb.net:27017,ac-qqctg7w-shard-00-01.ggv0hxk.mongodb.net:27017,ac-qqctg7w-shard-00-02.ggv0hxk.mongodb.net:27017/?ssl=true&replicaSet=atlas-131ots-shard-0&authSource=admin&appName=ClusterM0");
+// Lee la conexion desde el archivo .env
+const uri = process.env.URI_MONGO || "mongodb://localhost:27017";
+const cliente = new MongoClient(uri);
 
 //para la lectura por teclado
 const rl = createInterface({ input: process.stdin, output: process.stdout });
@@ -211,36 +210,36 @@ async function menuClientes() {
         console.log("Opción inválida.");
       } else {
         const id = elegido._id.toString();
-          const cambios = {};
+        const cambios = {};
 
-          console.log("Nuevo nombre (ENTER = no cambiar): ");
-          const nombre = await rl.question("");
-          if (nombre) cambios.nombre = nombre;
+        console.log("Nuevo nombre (ENTER = no cambiar): ");
+        const nombre = await rl.question("");
+        if (nombre) cambios.nombre = nombre;
 
-          console.log("Nuevo apellido (ENTER = no cambiar): ");
-          const apellido = await rl.question("");
-          if (apellido) cambios.apellido = apellido;
+        console.log("Nuevo apellido (ENTER = no cambiar): ");
+        const apellido = await rl.question("");
+        if (apellido) cambios.apellido = apellido;
 
-          console.log("Nuevo DNI (ENTER = no cambiar): ");
-          const DNI = await rl.question("");
-          if (DNI) cambios.DNI = parseInt(DNI, 10);
+        console.log("Nuevo DNI (ENTER = no cambiar): ");
+        const DNI = await rl.question("");
+        if (DNI) cambios.DNI = parseInt(DNI, 10);
 
-          console.log("Nuevo domicilio (ENTER = no cambiar): ");
-          const domicilio = await rl.question("");
-          if (domicilio) cambios.domicilio = domicilio;
+        console.log("Nuevo domicilio (ENTER = no cambiar): ");
+        const domicilio = await rl.question("");
+        if (domicilio) cambios.domicilio = domicilio;
 
-          console.log("Nuevo telefono (ENTER = no cambiar): ");
-          const telefono = await rl.question("");
-          if (telefono) cambios.telefono = telefono;
+        console.log("Nuevo telefono (ENTER = no cambiar): ");
+        const telefono = await rl.question("");
+        if (telefono) cambios.telefono = telefono;
 
-          console.log("Nuevo email (ENTER = no cambiar): ");
-          const email = await rl.question("");
-          if (email) cambios.email = email;
+        console.log("Nuevo email (ENTER = no cambiar): ");
+        const email = await rl.question("");
+        if (email) cambios.email = email;
 
-          await col.updateOne(
-            { _id: new ObjectId(id), disponible: true },
-            { $set: cambios }
-          );
+        await col.updateOne(
+          { _id: new ObjectId(id), disponible: true },
+          { $set: cambios }
+        );
       }
     } else if (opcionMenu === "3") {
       // DELETE (baja lógica)
@@ -692,10 +691,5 @@ async function verTrabajos(col) {
     }
   }
 }
-
-
-
-
-
 
 main();

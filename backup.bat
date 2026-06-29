@@ -4,19 +4,28 @@ REM Ejecutar parado en la raiz del proyecto: backup_cmd.bat
 REM NOTA: la fecha se arma desde %DATE%, asumiendo formato DD/MM/AAAA.
 REM Si tu Windows muestra la fecha en otro orden, ajustar los indices de abajo.
 
+echo ===================================================
+echo Iniciando proceso de backup...
+
 REM %DATE% suele venir como "DD/MM/AAAA". Tomamos cada parte.
 set dia=%DATE:~0,2%
 set mes=%DATE:~3,2%
 set anio=%DATE:~6,4%
 set fecha=%anio%-%mes%-%dia%
 
+echo Obteniendo fecha del sistema: %fecha%
+
 REM Carpeta destino con rutas relativas: resguardos_tpi\<fecha>
 set destino=resguardos_tpi\%fecha%
+echo Verificando directorio de destino: %destino%
 if not exist "%destino%" mkdir "%destino%"
 
+echo Conectando a MongoDB Atlas...
 REM Conexion a Atlas. La base "taller" va en el path del URI.
 set uri=mongodb://BD2TPI:admin1234@ac-qqctg7w-shard-00-00.ggv0hxk.mongodb.net:27017,ac-qqctg7w-shard-00-01.ggv0hxk.mongodb.net:27017,ac-qqctg7w-shard-00-02.ggv0hxk.mongodb.net:27017/taller?ssl=true^&replicaSet=atlas-131ots-shard-0^&authSource=admin
 
 mongodump --uri="%uri%" --out="%destino%"
 
+echo ===================================================
 echo Backup completado en: %destino%
+pause
