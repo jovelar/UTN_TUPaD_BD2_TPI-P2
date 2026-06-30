@@ -12,6 +12,6 @@ En el marco del sistema de gestión para el Taller Mecánico, se ha analizado el
 
 La implementación de la conexión Cliente-Servidor mediante Node.js y MongoDB Atlas (nube) representó un desafío inicial en cuanto al manejo de la asincronía. Comprender que las lecturas y escrituras no son instantáneas, sino que dependen de la red y requieren el uso de Promesas `async/await`, fue fundamental para el correcto flujo en la aplicación de consola.
 
-Por otro lado, a pesar de usar herramientas NoSQL donde el esquema es flexible, aprendimos que la responsabilidad de validar los tipos de datos (como evitar insertar valores `NaN` o fechas inválidas) recae fuertemente del lado del servidor. 
+Por otro lado, a pesar de usar herramientas NoSQL donde el esquema es flexible, aprendimos que la responsabilidad de validar los tipos de datos (como evitar insertar fechas inválidas) recae fuertemente del lado del servidor. 
 
 Finalmente, el resguardo mediante `mongodump` demostró ser una solución sencilla y robusta para asegurar la persistencia en la nube ante escenarios de pérdida de credenciales o datos en la DB, ya sea por error humano o fallos del sistema, sobretodo si se ejecutan respetando el RPO y RTO definidos.
